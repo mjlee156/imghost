@@ -1,0 +1,10 @@
+settings.py
+data/thumbs/*
+data/*.jpg
+data/*.png
+data/*.gif
+db/*.sql
+*.wsgi
+log/*_log
+
+

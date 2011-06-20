@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+      {% block head %}
+      <title>{% block title %}{{ page_title }}{% endblock %}</title>
+      <link rel="stylesheet" type="text/css" href="/static/style.css" />
+      <link rel="stylesheet" type="text/css" href="/static/colorbox.css" />
+      <script type="text/javascript" src="/static/jquery-1.4.4.min.js"></script>
+      <script type="text/javascript" src="/static/jquery.colorbox-min.js"></script>
+      {% endblock %}
+  </head>
+
+  <body>
+      {% block body %}
+      <div id="wrapper">
+          {% block content %}{% endblock %}
+      </div>
+
+      <div id="footer">
+          <p>
+          {% if user.is_authenticated %}
+          Logged in as <a href="/list/user/{{user.username}}">{{ user.username }}</a> - <a href="/upload">upload</a> /
+            <a href="/list">list</a> / 
+            {% if user.is_staff %} <a href="/admin/">admin</a> / {% endif %}
+            <a href="/logout">logout</a>
+
+          {% else %}
+          <a href="/login">Login</a>
+          {% endif %}
+          </p>
+          <p>
+            <a href="http://d0nk.us/">d0nk</a> +
+            <a href="http://djangoproject.com/">django</a> +
+            <a href="#">github</a>
+          </p>
+          <p>&copy; 2010-2011</p>
+      </div>
+
+      {% endblock %}
+  </body>
+</html>

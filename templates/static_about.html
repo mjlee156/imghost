@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="text-align:left;">
+<h1>About</h1>
+<p>Lorem Ipsum</p>
+
+<h2>Bookmarklet</h2>
+<code>
+    javascript:if(window.location.href.match("\\.(?:jpg|png|bmp|gif)$")){window.location="http://i.d0nk.us/upload?url="+window.location.href;}else{alert('not%20an%20image.');}
+</code>
+</div>
+{% endblock %}

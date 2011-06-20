@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<script type="text/javascript">
+var set_upload = function(t) {
+    if( t == 'file' ) {
+        $('#upload_file_container').show();
+        $('#upload_url_container').hide();
+    } else if( t == 'url' ) {
+        $('#upload_file_container').hide();
+        $('#upload_url_container').show();
+    }
+}
+</script>
+
+<form method="post" action="/upload" enctype="multipart/form-data">
+ {% csrf_token %}
+ <p id="upload_file_container" {% if url %}style="display:none;" {% endif %}><input type="file" name="upload_file" /></p>
+ <p id="upload_url_container" {% if not url %} style="display:none;"{% endif %} ><input type="text" name="upload_url" value="{{url}}" size="64" /></p>
+ <p>
+ <input type="radio" name="upload_type" value="file" id="upload_type_file" checked="{{url|yesno:"true,false"}}" onclick="set_upload('file');"/><label for="upload_type_file">File</label>  
+ <input type="radio" name="upload_type" value="url" id="upload_type_url" checked="{{url|yesno:"false,true"}}" onclick="set_upload('url');"/><label for="upload_type_url">URL</label>
+ </p>
+ <p><input type="submit" value="Upload" /></p>
+</form>
+
+{% else %}
+<p>Please <a href="/login">Login</a>.</p>
+{% endif %}
+
+{% endblock %}
+
