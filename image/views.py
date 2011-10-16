@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 # App specific imports
 from images.image.models import Image
 from images.image.base62 import base62
@@ -61,9 +62,14 @@ def upload(request):
         image_file = os.path.join(settings.MEDIA_ROOT,img.filename)
         thumbnail = os.path.join(settings.MEDIA_ROOT, 'thumbs', img.filename)
             
+        try:
+            img.save()
+        except IntegrityError:
+            os.unlink(tmp[1]) # delete the uploaded file if it already exists
+            return HttpResponseRedirect('/i/' + Image.objects.get(md5sum=img.md5sum).base62)
+
         shutil.move(tmp[1], image_file)
         os.system("/usr/bin/convert %s -thumbnail 150x150 %s" % (image_file, thumbnail))
-        img.save()
 
         return HttpResponseRedirect('/' + img.filename)
 
