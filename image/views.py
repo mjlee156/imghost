@@ -1,6 +1,8 @@
 import os
 import hashlib
 import urllib2
+import tempfile
+import shutil
 
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
@@ -20,6 +22,7 @@ def upload(request):
         if request.POST['upload_type'] == 'file':
             file = request.FILES['upload_file']
             img = Image()
+            
             try:
                 next_id = Image.objects.order_by('-id')[0].id + 1
             except IndexError:
@@ -36,15 +39,18 @@ def upload(request):
             thumbnail = os.path.join(settings.MEDIA_ROOT, 'thumbs', img.filename)
             
             md5 = hashlib.md5()
-            f = open(image_file, "wb+")
+            tmp = tempfile.mkstemp()
+            f = os.fdopen(tmp[0], "wb+")
             for chunk in file.chunks():
                 f.write(chunk)
                 md5.update(chunk)
             f.close()
             img.md5sum = md5.hexdigest()
 
+            shutil.move(tmp[1], image_file)
             os.system("/usr/bin/convert %s -thumbnail 150x150 %s" % (image_file, thumbnail))
             img.save()
+
 
             return HttpResponseRedirect('/i/' + img.base62)
 
@@ -71,12 +77,18 @@ def upload(request):
 
             image_file = os.path.join(settings.MEDIA_ROOT,img.filename)
             thumbnail = os.path.join(settings.MEDIA_ROOT, 'thumbs', img.filename)
-            f = open(image_file, "wb+")
+            
+            #f = open(image_file, "wb+")
+            #f.write(data)
+            #f.close()
+            tmp = tempfile.mkstemp()
+            f = os.fdopen(tmp[0], "wb+")
             f.write(data)
             f.close()
             
-            img.save()
+            shutil.move(tmp[1], image_file)
             os.system("/usr/bin/convert %s -thumbnail 150x150 %s" % (image_file, thumbnail))
+            img.save()
 
             return HttpResponseRedirect('/i/' + img.base62)
 
