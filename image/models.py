@@ -10,7 +10,15 @@ class Image(models.Model):
     description = models.CharField(max_length=765, null=True, blank=True)
     date_added = models.CharField(max_length=765)
     uploader = models.ForeignKey('auth.User', blank=True, null=True)
+    
+    def __unicode__(self):
+            return self.filename
+
+    def delete(*args, **kwargs):
+            super(Image, self).delete(*args, **kwargs)
+            # todo delete file when model is deleted
+    
+
     class Meta:
         db_table = u'images'
-
 
