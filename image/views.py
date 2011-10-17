@@ -11,9 +11,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 # App specific imports
-from images.image.models import Image
-from images.image.base62 import base62
-from images import settings
+from image.models import Image
+from image.base62 import base62
+import settings
 
 @login_required
 def upload(request):

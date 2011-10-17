@@ -1,6 +1,10 @@
 from django.conf.urls.defaults import *
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
+
+
+import settings
 
 urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -18,3 +22,9 @@ urlpatterns = patterns('',
     # Static pages
     (r'^about/?$', 'django.views.generic.simple.direct_to_template', { 'template':'static_about.html', }),
 )
+
+if settings.DEBUG:
+  urlpatterns += patterns('',
+    (r'^(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,})
+  )
+

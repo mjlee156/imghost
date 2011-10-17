@@ -5,6 +5,8 @@ data/*.png
 data/*.gif
 db/*.sql
 *.wsgi
+*.sqlite3
 log/*_log
+*.pyc
 
 
