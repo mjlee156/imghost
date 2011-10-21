@@ -4,38 +4,53 @@
       {% block head %}
       <title>{% block title %}{{ page_title }}{% endblock %}</title>
       <link rel="stylesheet" type="text/css" href="/static/style.css" />
+      <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css" />
       <link rel="stylesheet" type="text/css" href="/static/colorbox.css" />
       <script type="text/javascript" src="/static/jquery-1.6.4.min.js"></script>
       <script type="text/javascript" src="/static/jquery.colorbox-min.js"></script>
       {% endblock %}
   </head>
 
-  <body>
+  <body style="padding-top:50px;">
       {% block body %}
-      <div id="wrapper">
-          {% block content %}{% endblock %}
+      <div class="topbar">
+        <div class="topbar-inner">
+          <div class="container">
+            <h3><a class="brand" href="/">i.d0nk.us</a></h3>
+            <ul class="nav">
+              <li><a href="/upload">Upload</a></li>
+              <li><a href="/list">List</a></li>
+            </ul>
+
+            {% if user.is_authenticated %}
+            <ul class="nav secondary-nav">
+              {% if user.is_staff %}<li><a href="/admin/">Admin</a></li>{% endif %}
+              <li><a href="/logout">Logout ({{ user.username }})</a></li>
+            </ul>
+            {% else %}
+            <form method="post" action="/login" class="pull-right">
+              {% csrf_token %}            
+              <input type="text" name="username" placeholder="username" class="input-small" />
+              <input type="password" name="password" placeholder="password" class="input-small" />
+              <input type="hidden" name="next" value="{{ next }}" />
+              <button type="submit" class="btn">Login</button>
+            </form>
+            {% endif %}
+
+          </div>
+        </div>
       </div>
 
-      <div id="footer">
-          <p>
-          {% if user.is_authenticated %}
-          Logged in as <a href="/list/user/{{user.username}}">{{ user.username }}</a> - <a href="/upload">upload</a> /
-            <a href="/list">list</a> / 
-            {% if user.is_staff %} <a href="/admin/">admin</a> / {% endif %}
-            <a href="/logout">logout</a>
+      <div class="container">
+        {% block content %}{% endblock %}
 
-          {% else %}
-          <a href="/login">Login</a>
-          {% endif %}
-          </p>
-          <p>
-            <a href="http://d0nk.us/">d0nk</a> +
-            <a href="http://djangoproject.com/">django</a> +
-            <a href="#">github</a>
-          </p>
+        <div class="footer" style="text-align:center;padding-top:40px;">
+          <a href="http://d0nk.us/">d0nk</a> +
+          <a href="http://djangoproject.com/">django</a> +
+          <a href="#">github</a>
           <p>&copy; 2010-2011</p>
-      </div>
-
-      {% endblock %}
+       </div>
+    </div>
+    {% endblock %}
   </body>
 </html>
