@@ -12,9 +12,17 @@ div.image:hover {
     border: 1px solid #ccc;
 }
 
+div.image .imgholder {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  width:150px;
+  height:150px;
+
+  vertical-align:middle;
+  text-align: center;
+}
+
 div.image a.imglink img {
-    display:block;
-    margin-left: auto;
-    margin-right: auto;
 }
 

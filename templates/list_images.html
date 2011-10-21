@@ -6,10 +6,12 @@
        {{ image.filename }} (<abbr title="{{ image.md5sum }}">md5</abbr>)
      </h5>
 
-     <a href="/{{ image.filename }}" class="imglink">
-         <img src="/thumbs/{{ image.filename }}" alt="{{ image.filename }}" />
-     </a>
-     
+     <div class="imgholder">
+       <a href="/{{ image.filename }}" class="imglink">
+           <img src="/thumbs/{{ image.filename }}" alt="{{ image.filename }}" />
+       </a>
+     </div>
+
      <ul class="unstyled">
        <li>orig: {{ image.orig_filename }}</li>
        <li>user: {{ image.uploader.username }}</li>
