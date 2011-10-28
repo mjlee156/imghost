@@ -3,6 +3,9 @@ data/thumbs/*
 data/*.jpg
 data/*.png
 data/*.gif
+data/*.JPG
+data/*.PNG
+data/*.GIF
 db/*.sql
 *.wsgi
 *.sqlite3
