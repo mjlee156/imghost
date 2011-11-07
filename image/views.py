@@ -71,17 +71,22 @@ def upload(request):
         shutil.move(tmp[1], image_file)
         os.system("/usr/bin/convert %s -thumbnail 150x150 %s" % (image_file, thumbnail))
 
-        return HttpResponseRedirect('/' + img.filename)
+        return HttpResponseRedirect(settings.MEDIA_URL + img.filename)
 
 @login_required
 def view_image(request, id):
     return render_to_response('view_image.html', 
-            {'image': Image.objects.get(base62=id)}, context_instance=RequestContext(request))
+        { 'image': Image.objects.get(base62=id), 
+          'settings':settings},
+        context_instance=RequestContext(request))
 
 @login_required
 def list_images(request, page=0):
     return render_to_response('list_images.html', 
-            {'page':page, 'images': Image.objects.all()}, context_instance=RequestContext(request))
+            { 'page':page, 
+              'images': Image.objects.all(), 
+              'settings': settings},
+            context_instance=RequestContext(request))
 
 @login_required
 def user_images(request, user=None):
@@ -91,4 +96,4 @@ def user_images(request, user=None):
         user = User.objects.get(username=user)
     
     return render_to_response('list_images.html',
-            {'images': Image.objects.filter(uploader=user), }, context_instance=RequestContext(request))
+        {'images': Image.objects.filter(uploader=user), 'settings':settings,}, context_instance=RequestContext(request))

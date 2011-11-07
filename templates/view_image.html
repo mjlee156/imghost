@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<img src="/thumbs/{{ image.filename }}" alt="{{ image.filename }}" />
+<img src="{{ settings.STATIC_URL }}/thumbs/{{ image.filename }}" alt="{{ image.filename }}" />
 <ul>
    <li>Info here</li>
    <li>and here</li>
