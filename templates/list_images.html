@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="row" style="text-align:center;">
 {% for image in images %}
  <div class="well image">
      <h5>
@@ -22,7 +23,7 @@
 {% endfor %}
 
 <p>Images: {{ images|length }}</p>
-
+</div>
 <script>
     $("a.imglink").colorbox();
 </script>
