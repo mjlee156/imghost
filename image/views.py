@@ -53,7 +53,7 @@ def upload(request):
             next_id = settings.IMAGE_ID_OFFSET + 1
         
         img.base62 = base62(next_id)
-        img.filename = base62(next_id) + "." + fext
+        img.filename = base62(next_id) + "." + fext.lower()
         img.orig_filename = orig
         img.type = '' # todo
         img.description = '' # not implemented yet.
@@ -66,7 +66,7 @@ def upload(request):
             img.save()
         except IntegrityError:
             os.unlink(tmp[1]) # delete the uploaded file if it already exists
-            return HttpResponseRedirect('/i/' + Image.objects.get(md5sum=img.md5sum).base62)
+            return HttpResponseRedirect( settings.MEDIA_URL + Image.objects.get(md5sum=img.md5sum).filename)
 
         shutil.move(tmp[1], image_file)
         os.system("/usr/bin/convert %s -thumbnail 150x150 %s" % (image_file, thumbnail))
