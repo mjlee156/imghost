@@ -1,7 +1,6 @@
 import os, sys
-os.environ['DJANGO_SETTINGS_MODULE'] = 'imghost.settings'
-sys.path.append('/path/to/parent')
-sys.path.append('/path/to/parent/images')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+sys.path.append('/path/to/imghost')
 
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
