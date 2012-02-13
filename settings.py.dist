@@ -92,6 +92,9 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     'image',
+
+	# for south migrations
+	'south',
 )
 
 IMAGE_ID_OFFSET = 1000
