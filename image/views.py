@@ -51,7 +51,8 @@ def upload(request):
             next_id = Image.objects.order_by('-id')[0].id + 1
         except IndexError:
             next_id = settings.IMAGE_ID_OFFSET + 1
-        
+
+        img.id = next_id
         img.base62 = base62(next_id)
         img.filename = base62(next_id) + "." + fext.lower()
         img.orig_filename = orig
@@ -64,7 +65,7 @@ def upload(request):
             
         try:
             img.save()
-        except IntegrityError:
+        except IntegrityError, e:
             os.unlink(tmp[1]) # delete the uploaded file if it already exists
             return HttpResponseRedirect( settings.MEDIA_URL + Image.objects.get(md5sum=img.md5sum).filename)
 
