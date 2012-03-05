@@ -3,18 +3,22 @@
   <head>
       {% block head %}
       <title>{% block title %}{{ page_title }}{% endblock %}</title>
+
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="stylesheet" type="text/css" href="/static/style.css" />
-      <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css" />
+      <link rel="stylesheet" type="text/css" href="/static/bootstrap.css" />
+      <link rel="stylesheet" type="text/css" href="/static/bootstrap-responsive.css" />
       <link rel="stylesheet" type="text/css" href="/static/colorbox.css" />
-      <script type="text/javascript" src="/static/jquery-1.6.4.min.js"></script>
+
+      <script type="text/javascript" src="/static/jquery-1.7.1.min.js"></script>
       <script type="text/javascript" src="/static/jquery.colorbox-min.js"></script>
       {% endblock %}
   </head>
 
   <body style="padding-top:50px;">
       {% block body %}
-      <div class="topbar">
-        <div class="topbar-inner">
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
           <div class="container">
 				  <h3><a class="brand" href="/">imghost</a></h3>
             <ul class="nav">
@@ -23,12 +27,12 @@
             </ul>
 
             {% if user.is_authenticated %}
-            <ul class="nav secondary-nav">
+            <ul class="nav pull-right">
               {% if user.is_staff %}<li><a href="/admin/">Admin</a></li>{% endif %}
               <li><a href="/logout">Logout ({{ user.username }})</a></li>
             </ul>
             {% else %}
-            <form method="post" action="/login" class="pull-right">
+            <form method="post" action="/login" class="navbar-form pull-right">
               {% csrf_token %}            
               <input type="text" name="username" placeholder="username" class="input-small" />
               <input type="password" name="password" placeholder="password" class="input-small" />
