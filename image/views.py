@@ -36,7 +36,8 @@ def upload(request):
             f.close()
 
         elif request.POST['upload_type'] == 'url':
-            remote_image = urllib2.urlopen(request.POST['upload_url'])
+            upload_url = request.POST['upload_url']
+            remote_image = urllib2.urlopen(upload_url)
             data = remote_image.read()
             md5.update(data)
             fext = request.POST['upload_url'][-3:]
